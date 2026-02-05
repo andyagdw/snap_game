@@ -1,9 +1,9 @@
 package card;
 
 public class Card {
-    private final String SUIT; // Unicode characters of heart, club, diamond and spade
-    private final String SYMBOL; // 2 - A (Ace)
-    private final Integer VALUE; // 2 - 14
+    protected final String SUIT; // Unicode characters of heart, club, diamond and spade
+    protected final String SYMBOL; // 2 - A (Ace)
+    protected final Integer VALUE; // 2 - 14
 
 
     public Card(String suit, String symbol, Integer value) {

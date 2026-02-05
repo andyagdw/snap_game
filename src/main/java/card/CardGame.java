@@ -1,13 +1,10 @@
 package card;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CardGame {
     private List<Card> deckOfCards;
-    private String name;
+    private final String name;
 
     public CardGame(String name) {
         this.name = name;
@@ -17,10 +14,6 @@ public class CardGame {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setDeckOfCards(List<Card> deckOfCards) {
@@ -35,6 +28,18 @@ public class CardGame {
 //    Takes a card from the top of the deck and returns it
     public Card dealCard() {
         return deckOfCards.removeLast();
+    }
+
+    public void shuffleDeck() {
+        Collections.shuffle(deckOfCards);
+    }
+
+    public void sortDeckInNumberOrder() {
+        deckOfCards.sort(Comparator.comparing(card -> card.VALUE));
+    }
+
+    public void sortDeckIntoSuits() {
+        deckOfCards.sort(Comparator.comparing(card -> card.SUIT));
     }
 
     public void populateDeckOfCards() {

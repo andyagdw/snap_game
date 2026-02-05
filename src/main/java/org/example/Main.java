@@ -7,7 +7,8 @@ import card.CardGame;
 public class Main {
     static void main() {
         CardGame cardGame = new CardGame("Game 1");
-        System.out.println(cardGame.dealCard());
-        System.out.println(cardGame.getDeck().size());
+        cardGame.shuffleDeck();
+        cardGame.sortDeckIntoSuits();
+        System.out.println(cardGame.getDeck());
     }
 }
