@@ -1,7 +1,9 @@
 package card;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CardGame {
     private List<Card> deckOfCards;
@@ -11,11 +13,6 @@ public class CardGame {
         this.name = name;
         this.deckOfCards = new ArrayList<>();
         populateDeckOfCards(); // Populate deck when CardGame instance is created
-    }
-
-    public List<Card> getDeck() {
-        // Should display what is returned from toString method on Card class
-        return deckOfCards;
     }
 
     public String getName() {
@@ -30,14 +27,36 @@ public class CardGame {
         this.deckOfCards = deckOfCards;
     }
 
+    public List<Card> getDeck() {
+        // Should display what is returned from toString method on Card class
+        return deckOfCards;
+    }
+
+//    Takes a card from the top of the deck and returns it
+    public Card dealCard() {
+        return deckOfCards.removeLast();
+    }
+
     public void populateDeckOfCards() {
         String[] suits = { "♥", "♦", "♣", "♠" };
-        String[] symbols = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
-        int[] values = { 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 };
+        Map<String, Integer> symbolsAndValues = new LinkedHashMap<>();
+        symbolsAndValues.put("2", 2);
+        symbolsAndValues.put("3", 3);
+        symbolsAndValues.put("4", 4);
+        symbolsAndValues.put("5", 5);
+        symbolsAndValues.put("6", 6);
+        symbolsAndValues.put("7", 7);
+        symbolsAndValues.put("8", 8);
+        symbolsAndValues.put("9", 9);
+        symbolsAndValues.put("10", 10);
+        symbolsAndValues.put("J", 11);
+        symbolsAndValues.put("Q", 12);
+        symbolsAndValues.put("K", 13);
+        symbolsAndValues.put("A", 14);
 
         for (String suit : suits) {
-            for (int i = 0; i < symbols.length; i++) {
-                deckOfCards.add(new Card(suit, symbols[i], values[i]));
+            for (String symbol: symbolsAndValues.keySet()) {
+                deckOfCards.add(new Card(suit, symbol, symbolsAndValues.get(symbol)));
             }
         }
     }

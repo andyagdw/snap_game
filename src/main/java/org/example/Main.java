@@ -1,6 +1,5 @@
 package org.example;
 
-import card.Card;
 import card.CardGame;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -8,8 +7,7 @@ import card.CardGame;
 public class Main {
     static void main() {
         CardGame cardGame = new CardGame("Game 1");
+        System.out.println(cardGame.dealCard());
         System.out.println(cardGame.getDeck().size());
-
-        Card myCard = new Card("♥", "2", 4);
     }
 }
