@@ -3,8 +3,8 @@ package card;
 import java.util.*;
 
 public class CardGame {
-    private List<Card> deckOfCards;
-    private final String name;
+    protected List<Card> deckOfCards;
+    protected final String name;
 
     public CardGame(String name) {
         this.name = name;
