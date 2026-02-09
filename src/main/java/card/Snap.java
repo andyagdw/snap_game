@@ -1,5 +1,7 @@
 package card;
 
+import player.Player;
+
 import java.util.Scanner;
 
 public class Snap extends CardGame {
@@ -49,6 +51,16 @@ public class Snap extends CardGame {
         System.out.print("4. By the time all cards have been dealt from the deck and there has not been a match, you lose.\n\n");
     }
 
+    public void displayGameInstructions(String player1Name, String player2Name) {
+        System.out.printf("\nHi %s and %s, welcome to Snap!\n", player1Name, player2Name);
+        System.out.print("The rules of the game are as follows:\n");
+        System.out.print("1. By pressing `enter` in the command line, you take your turn.\n");
+        System.out.print("2. Each turn, a new card is dealt from the deck.\n");
+        System.out.print("3. The game continues until two cards in a row have the same symbol, at which point the person" +
+                " who drew the card that matches the symbol of the previous card wins and the game ends.\n");
+        System.out.print("4. By the time all cards have been dealt from the deck and there has not been a match, the game ends in a tie.\n\n");
+    }
+
     public int getNumOfTimesToShuffleDeck(Scanner scanner) {
         System.out.print("Before starting the game, how many times would you like to shuffle the deck: ");
         return scanner.nextInt();
@@ -58,33 +70,47 @@ public class Snap extends CardGame {
         setGameIsRunning(false);
     }
 
-    public void playGame(Scanner scanner) {
+    public void playGame(Scanner scanner, int mode) {
         setGameIsRunning(true);
+        String gameOverSinglePlayerText = "Game over! You have failed to match two cards.";
+        String gameOverMultiplayerText = "Game over! It was a tie.";
+
         while (isGameIsRunning()) {
-            if (getDeck().isEmpty()) { // If deck is empty, user has failed to match previous card to current
-                System.out.println("Game over! You have failed to match two cards.");
+            if (getDeck().isEmpty()) { // If deck is empty, user has failed to match previous card to current OR both players have failed to match
+                if (mode == 1) {
+                    System.out.println(gameOverSinglePlayerText);
+                } else if (mode == 2) {
+                    System.out.println(gameOverMultiplayerText);
+                }
                 endGame();
                 break;
             } else {
-                setCurrentCard(dealCard());
-                System.out.println("Current Card: " + getCurrentCard());
-                System.out.println("Previous Card: " + getPreviousCard());
-                if (getPreviousCard() != null) {
-                    if (checkIsSnap(getCurrentCard(), getPreviousCard())) {
-                        System.out.println("You win!");
-                        endGame();
-                        break;
-                    }
+                Player currentPlayer = Player.getNextPlayer();
+                if (mode == 2) {
+                    System.out.printf("%s's turn\n", currentPlayer);
                 }
-                setPreviousCard(getCurrentCard());
-                System.out.print("Press `enter` to deal next card. Enter any other key to end game:");
+                System.out.print("Press `enter` to deal next card. Enter any other key to end game: ");
                 String answer = scanner.nextLine().trim();
                 if (!answer.isEmpty()) {
                     endGame();
                     break;
                 }
+                setCurrentCard(dealCard());
+                System.out.println("\nCurrent Card: " + getCurrentCard());
+                System.out.println("Previous Card: " + getPreviousCard() + "\n");
+                if (getPreviousCard() != null) {
+                    if (checkIsSnap(getCurrentCard(), getPreviousCard())) {
+                        if (mode == 1) {
+                            System.out.println("You win!");
+                        } else if (mode == 2) {
+                            System.out.printf("%s wins!!\n", currentPlayer);
+                        }
+                        endGame();
+                        break;
+                    }
+                }
+                setPreviousCard(getCurrentCard());
             }
         }
     }
-
 }
