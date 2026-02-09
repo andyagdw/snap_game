@@ -3,6 +3,7 @@ package card;
 import player.Player;
 
 import java.util.Scanner;
+import java.util.concurrent.*;
 
 public class Snap extends CardGame {
     protected Card previousCard;
@@ -70,6 +71,15 @@ public class Snap extends CardGame {
         setGameIsRunning(false);
     }
 
+    public void handleSinglePlayerCheckIsSnap() {
+        System.out.println("You win!");
+        endGame();
+    }
+
+    public void handleMultiplayerCheckIsSnap(Player currentPLayer) {
+        System.out.printf("%s wins\n!", currentPLayer);
+    }
+
     public void playGame(Scanner scanner, int mode) {
         setGameIsRunning(true);
         String gameOverSinglePlayerText = "Game over! You have failed to match two cards.";
@@ -84,9 +94,9 @@ public class Snap extends CardGame {
                 }
                 endGame();
                 break;
-            } else {
+            } else { // Deck is not empty
                 Player currentPlayer = Player.getNextPlayer();
-                if (mode == 2) {
+                if (mode == 2) { // Only display current player name in multiplayer mode
                     System.out.printf("%s's turn\n", currentPlayer);
                 }
                 System.out.print("Press `enter` to deal next card. Enter any other key to end game: ");
@@ -98,15 +108,15 @@ public class Snap extends CardGame {
                 setCurrentCard(dealCard());
                 System.out.println("\nCurrent Card: " + getCurrentCard());
                 System.out.println("Previous Card: " + getPreviousCard() + "\n");
-                if (getPreviousCard() != null) {
+                if (getPreviousCard() != null) { // Runs after first card is dealt (previous card will always be null on first deal card)
                     if (checkIsSnap(getCurrentCard(), getPreviousCard())) {
-                        if (mode == 1) {
-                            System.out.println("You win!");
-                        } else if (mode == 2) {
-                            System.out.printf("%s wins!!\n", currentPlayer);
+                        if (mode == 1) { // Single player mode
+                            handleSinglePlayerCheckIsSnap();
+                            break;
+                        } else if (mode == 2) { // multiplayer mode
+                           handleMultiplayerCheckIsSnap(currentPlayer);
+                           break;
                         }
-                        endGame();
-                        break;
                     }
                 }
                 setPreviousCard(getCurrentCard());
