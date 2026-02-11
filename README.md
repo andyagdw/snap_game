@@ -1,8 +1,8 @@
-# Snap
+# Snap 💥
 
 The classic _Snap_ game available to play in both single-player and multi-player mode.
 
-## Getting Started
+## Getting Started ✅
 
 ### Prerequisites
 * Java JDK 11 or later installed and java/javac on your PATH 
