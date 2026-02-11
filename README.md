@@ -10,9 +10,9 @@ The classic _Snap_ game available to play in both single-player and multi-player
 * IntelliJ IDEA (recommended)
 
 #### Using IntelliJ IDEA (recommended)
-If IntelliJ IDEA has no project open
+If IntelliJ IDEA has no project open:
 
-1. Click on **clone repository**.
+1. Click on **clone repository**
 2. Paste either of these URLs and click Clone:
    * https://github.com/andyagdw/snap_game.git
    * git@github.com:andyagdw/snap_game.git
@@ -20,7 +20,7 @@ If IntelliJ IDEA has no project open
 If a project is already open:
 
 1. Go to File → New → Project from Version Control....
-2. Paste one of the URLs above and click **Clone**.
+2. Paste one of the URLs above and click **Clone**
 
 After cloning:
 
