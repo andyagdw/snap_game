@@ -10,12 +10,20 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     static void main() {
-        Scanner scanner = new Scanner(System.in);
         String errorText = "Please enter a number that's greater than 0";
+        boolean hasGameBeenPlayed = false;
         while (true) {
+            Scanner scanner = new Scanner(System.in);
             Snap newSnapGame = new Snap("New Game");
+
+            if (hasGameBeenPlayed) {
+                boolean userWantsToPlayAgain = newSnapGame.checkUserWantsToPlayAgain(scanner);
+                if (!userWantsToPlayAgain) {
+                    break;
+                }
+            }
             Player.listOfPlayers.clear(); // Remove previous players
-            System.out.println("Please enter a mode you would like to play:\n1. Single Player\n2. Multi-Player");
+            newSnapGame.displayMainMenu();
             int mode;
             try {
                 mode = scanner.nextInt();
@@ -25,8 +33,7 @@ public class Main {
                 continue;
             }
             scanner.nextLine();
-            if (mode == 1) {
-    //            SINGLE PLAYER MODE
+            if (mode == 1) { // SINGLE PLAYER MODE
                 System.out.print("Please enter your name to start: ");
                 String userName = MyUtils.getPlayerName(scanner);
                 new Player(userName);
@@ -39,10 +46,8 @@ public class Main {
                     newSnapGame.shuffleDeck();
                 }
                 System.out.printf("Deck has been shuffled %d time(s)\n\n", numOfTimesToShuffleDeck);
-                newSnapGame.playGame(scanner, mode);
-    //            End SINGLE PLAYER MODE
-            } else if (mode == 2) {
-//                MULTI-PLAYER MODE
+                newSnapGame.playGame(scanner, mode); // END SINGLE PLAYER MODE
+            } else if (mode == 2) { // MULTI-PLAYER MODE
                 System.out.print("Please enter a name for player 1: ");
                 String player1UserName = MyUtils.getPlayerName(scanner);
                 System.out.print("Please enter a name for player 2: ");
@@ -60,17 +65,12 @@ public class Main {
                     newSnapGame.shuffleDeck();
                 }
                 System.out.printf("Deck has been shuffled %d time(s)\n\n", numOfTimesToShuffleDeck);
-                newSnapGame.playGame(scanner, mode);
-//                END MULTI-PLAYER MODE
+                newSnapGame.playGame(scanner, mode); // END MULTI-PLAYER MODE
             } else {
-                continue; // Integers that are not 1 and 2
+                continue; // Integers that are not valid options (i.e., 1 and 2)
             }
+            hasGameBeenPlayed = true;
             Player.setPlayerIndex(0); // Reset player index
-            System.out.print("Play again? y or n: ");
-            String userWantsToPlayAgain = scanner.nextLine();
-            if (!userWantsToPlayAgain.equals("y")) {
-                break;
-            }
         }
     }
 }

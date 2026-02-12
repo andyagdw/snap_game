@@ -16,7 +16,8 @@ public class MyUtils {
         }
     }
 
-    public static int getNumOfTimesToShuffleDeck(Snap newSnapGame, String errorText, Scanner scanner) {        int numOfTimesToShuffleDeck;
+    public static int getNumOfTimesToShuffleDeck(Snap newSnapGame, String errorText, Scanner scanner) {
+        int numOfTimesToShuffleDeck;
         while (true) {
             try {
                 numOfTimesToShuffleDeck = newSnapGame.getNumOfTimesToShuffleDeck(scanner);

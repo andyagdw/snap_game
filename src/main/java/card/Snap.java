@@ -14,31 +14,31 @@ public class Snap extends CardGame {
         super(name);
     }
 
-    public Card getPreviousCard() {
+    protected Card getPreviousCard() {
         return previousCard;
     }
 
-    public void setPreviousCard(Card previousCard) {
+    protected void setPreviousCard(Card previousCard) {
         this.previousCard = previousCard;
     }
 
-    public Card getCurrentCard() {
+    protected Card getCurrentCard() {
         return currentCard;
     }
 
-    public void setCurrentCard(Card currentCard) {
+    protected void setCurrentCard(Card currentCard) {
         this.currentCard = currentCard;
     }
 
-    public boolean isGameIsRunning() {
+    protected boolean isGameIsRunning() {
         return gameIsRunning;
     }
 
-    public void setGameIsRunning(boolean gameIsRunning) {
+    protected void setGameIsRunning(boolean gameIsRunning) {
         this.gameIsRunning = gameIsRunning;
     }
 
-    public boolean checkIsSnap(Card currentCard, Card previousCard) {
+    protected boolean checkIsSnap(Card currentCard, Card previousCard) {
         return previousCard.getSYMBOL().equals(currentCard.getSYMBOL());
     }
 
@@ -57,9 +57,20 @@ public class Snap extends CardGame {
         System.out.print("The rules of the game are as follows:\n");
         System.out.print("1. By pressing `enter` in the command line, you take your turn.\n");
         System.out.print("2. Each turn, a new card is dealt from the deck.\n");
-        System.out.print("3. The game continues until two cards in a row have the same symbol, at which point the person" +
-                " who drew the card that matches the symbol of the previous card wins and the game ends.\n");
-        System.out.print("4. By the time all cards have been dealt from the deck and there has not been a match, the game ends in a tie.\n\n");
+        System.out.print("3. When a player draws a card with the same symbol as the previous card, AND types in `snap` " +
+                "within two seconds, they win and the game ends.\n");
+        System.out.println("4. If the player fails to type in `snap` within the timeframe, they lose the game.");
+        System.out.print("5. By the time all cards have been dealt from the deck and there has not been a match, the game ends in a tie.\n\n");
+    }
+
+    public boolean checkUserWantsToPlayAgain(Scanner scanner) {
+        System.out.print("Play again? y or n: ");
+        String userWantsToPlayAgain = scanner.nextLine();
+        return userWantsToPlayAgain.equalsIgnoreCase("y");
+    }
+
+    public void displayMainMenu() {
+        System.out.println("Please enter a mode you would like to play:\n1. Single Player\n2. Multi-Player");
     }
 
     public int getNumOfTimesToShuffleDeck(Scanner scanner) {
@@ -76,8 +87,55 @@ public class Snap extends CardGame {
         endGame();
     }
 
-    public void handleMultiplayerCheckIsSnap(Player currentPLayer) {
-        System.out.printf("%s wins\n!", currentPLayer);
+//    public void handleMultiplayerCheckIsSnap(Player currentPLayer) {
+//        System.out.printf("%s wins\n!", currentPLayer);
+//    }
+
+//    public void handleMultiplayerCheckIsSnap1(Scanner scanner) {
+//        ExecutorService ex = Executors.newSingleThreadExecutor();
+//
+//        Callable<String> readTask = () -> {
+//            System.out.print("SNAP TIME! Type 'SNAP' within two seconds to win....");
+//            return scanner.nextLine();
+//        };
+//
+//        Future<String> future = ex.submit(readTask);
+//        try {
+//            String input = future.get(2, TimeUnit.SECONDS);
+//            if (!input.equalsIgnoreCase("snap")) {
+//                System.out.println("\nFailed to type in 'SNAP'. " + Player.getNextPlayer() + " wins.");
+//            }
+//        } catch (TimeoutException te) {
+//            System.out.println("\nFailed to type in 'SNAP'. " + Player.getNextPlayer() + " wins.");
+//            future.cancel(true);
+//        } catch (ExecutionException | InterruptedException e) {
+//            e.printStackTrace();
+//        } finally {
+//            endGame();
+//            ex.shutdownNow();
+//        }
+//    }
+
+    public void handleMultiplayerCheckIsSnap(Scanner scanner, Player currentPlayer) {
+        System.out.print("SNAP TIME! Type 'SNAP' within two seconds to win....");
+
+        long startTime = System.currentTimeMillis(); // Since 1970
+        String input = "";
+
+        // Wait for user input for 2 seconds (check input in a loop)
+        while (System.currentTimeMillis() - startTime < 2000) {
+            if (scanner.hasNextLine()) {
+                input = scanner.nextLine();
+                break;  // Exit if input is provided
+            }
+        }
+
+        if (input.equalsIgnoreCase("snap")) {
+            System.out.println(currentPlayer + " wins." );
+        } else {
+            System.out.println("\nFailed to type in 'SNAP'. " + Player.getNextPlayer() + " wins.");
+        }
+        endGame();
     }
 
     public void playGame(Scanner scanner, int mode) {
@@ -114,8 +172,8 @@ public class Snap extends CardGame {
                             handleSinglePlayerCheckIsSnap();
                             break;
                         } else if (mode == 2) { // multiplayer mode
-                           handleMultiplayerCheckIsSnap(currentPlayer);
-                           break;
+                            handleMultiplayerCheckIsSnap(scanner, currentPlayer);
+                            break;
                         }
                     }
                 }

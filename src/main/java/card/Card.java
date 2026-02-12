@@ -12,15 +12,15 @@ public class Card {
         this.VALUE = value;
     }
 
-    public String getSUIT() {
+    protected String getSUIT() {
         return SUIT;
     }
 
-    public String getSYMBOL() {
+    protected String getSYMBOL() {
         return SYMBOL;
     }
 
-    public int getValue() {
+    protected int getValue() {
         return VALUE;
     }
 
