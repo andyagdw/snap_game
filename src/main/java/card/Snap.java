@@ -121,19 +121,26 @@ public class Snap extends CardGame {
 
         long startTime = System.currentTimeMillis(); // Since 1970
         String input = "";
+        short timeframe = 2000;
 
-        // Wait for user input for 2 seconds (check input in a loop)
-        while (System.currentTimeMillis() - startTime < 2000) {
+        // Wait for user input for up to 2 seconds
+        while (System.currentTimeMillis() - startTime < timeframe) {
             if (scanner.hasNextLine()) {
                 input = scanner.nextLine();
-                break;  // Exit if input is provided
+                break;  // Exit if input is provided within 2 seconds
             }
         }
 
-        if (input.equalsIgnoreCase("snap")) {
-            System.out.println(currentPlayer + " wins." );
+        // Check if input was received within 2 seconds
+        if (System.currentTimeMillis() - startTime < timeframe) {
+            if (input.equalsIgnoreCase("snap")) { // Correct input
+                System.out.println("You entered 'SNAP' within two seconds. " + currentPlayer + " wins!!!");
+            } else { // Incorrect input
+                System.out.println("Incorrect input. " + Player.getNextPlayer() + " wins!!!");
+            }
         } else {
-            System.out.println("\nFailed to type in 'SNAP'. " + Player.getNextPlayer() + " wins.");
+            // If input was received after 2 seconds
+            System.out.println("You DIDN'T type 'SNAP' within two seconds. " + Player.getNextPlayer() + " wins!!!");
         }
         endGame();
     }

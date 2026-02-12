@@ -46,18 +46,18 @@ public class CardGame {
         String[] suits = { "♥", "♦", "♣", "♠" };
         Map<String, Integer> symbolsAndValues = new LinkedHashMap<>();
         symbolsAndValues.put("2", 2);
-//        symbolsAndValues.put("3", 3);
-//        symbolsAndValues.put("4", 4);
-//        symbolsAndValues.put("5", 5);
-//        symbolsAndValues.put("6", 6);
-//        symbolsAndValues.put("7", 7);
-//        symbolsAndValues.put("8", 8);
-//        symbolsAndValues.put("9", 9);
-//        symbolsAndValues.put("10", 10);
-//        symbolsAndValues.put("J", 11);
-//        symbolsAndValues.put("Q", 12);
-//        symbolsAndValues.put("K", 13);
-//        symbolsAndValues.put("A", 14);
+        symbolsAndValues.put("3", 3);
+        symbolsAndValues.put("4", 4);
+        symbolsAndValues.put("5", 5);
+        symbolsAndValues.put("6", 6);
+        symbolsAndValues.put("7", 7);
+        symbolsAndValues.put("8", 8);
+        symbolsAndValues.put("9", 9);
+        symbolsAndValues.put("10", 10);
+        symbolsAndValues.put("J", 11);
+        symbolsAndValues.put("Q", 12);
+        symbolsAndValues.put("K", 13);
+        symbolsAndValues.put("A", 14);
 
         for (String suit : suits) {
             for (String symbol: symbolsAndValues.keySet()) {
