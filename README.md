@@ -7,6 +7,7 @@ The classic _Snap_ game available to play in both single-player and multi-player
 ### Prerequisites
 * Java JDK 11 or later installed and java/javac on your PATH 
 * Git installed
+* Apache Maven
 * IntelliJ IDEA (recommended)
 
 #### Using IntelliJ IDEA (recommended)
