@@ -37,11 +37,11 @@ clone (choose https or ssh)
 git clone https://github.com/andyagdw/snap_game.git
 cd snap_game
 
-# compile
-javac -d out src/main/java/org/example/Main.java
+# build
+mvn clean install
 
 # run
-java -cp out org.example.Main
+mvn exec:java -Dexec.mainClass="org.example.Main"
 ```
 
 ## Credits
